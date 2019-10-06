@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext.asynciterable", "es2016"],
+    "module": "commonjs",
+    "target": "es2016",
+    "sourceMap": true,
+    "watch": true,
+    "outDir": "build",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
