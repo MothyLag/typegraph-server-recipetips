@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc -p ./",
-    "dev": "nodemon ./src/main.ts --exec ts-node"
+    "dev": "nodemon ./src/main.ts --exec ts-node",
+    "start": "node ./build/main.js"
   },
   "dependencies": {
     "@types/graphql": "^14.5.0",

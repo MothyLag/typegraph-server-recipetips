@@ -13,12 +13,12 @@ async function bootstrap() {
     resolvers: [__dirname + '/resolvers/*/*.resolver.*s'],
     validate: true,
     emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
-    container: Container
+    container: Container,
   });
   const server = new ApolloServer({
     schema,
     playground: true,
-    context: ctx => ctx
+    context: (ctx) => ctx,
   });
 
   const { url } = await server.listen(4000);

@@ -8,7 +8,6 @@
     "outDir": "build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true,
     "skipLibCheck": true
   },
   "include": ["src/**/*"],

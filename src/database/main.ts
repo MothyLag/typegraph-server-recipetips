@@ -8,7 +8,7 @@ export class DataBase {
   private readonly URI =
     'mongodb+srv://MothyLag:robomotymon100613@cluster0-cw6gu.mongodb.net/recipetips?retryWrites=true&w=majority';
   //private readonly URI = 'mongodb://localhost:27017/recipetips';
-  connect() {
+  public connect() {
     try {
       mongoose.connect(this.URI, { useNewUrlParser: true });
     } catch (error) {
