@@ -5,8 +5,9 @@ import { concatMap, map } from 'rxjs/operators';
 
 export class DataBase {
   // private readonly URI =
-  //   'mongodb+srv://mothy:robomotymon100613@mothycluster-uxz7k.gcp.mongodb.net/recipetips?retryWrites=true&w=majority';
-  private readonly URI = 'mongodb://localhost:27017/recipetips';
+  private readonly URI =
+    'mongodb+srv://MothyLag:robomotymon100613@cluster0-cw6gu.mongodb.net/recipetips?retryWrites=true&w=majority';
+  //private readonly URI = 'mongodb://localhost:27017/recipetips';
   connect() {
     try {
       mongoose.connect(this.URI, { useNewUrlParser: true });
@@ -17,7 +18,7 @@ export class DataBase {
 
   startTransaction$() {
     return from(startSession()).pipe(
-      concatMap(session =>
+      concatMap((session) =>
         of(session.startTransaction()).pipe(map(() => session))
       )
     );

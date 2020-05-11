@@ -16,7 +16,7 @@ export class UserService {
 
   private _countByEmail(email: string) {
     return from(UserModel.countDocuments({ email })).pipe(
-      map(emailCount => emailCount >= 1)
+      map((emailCount) => emailCount >= 1)
     );
   }
 
@@ -31,24 +31,26 @@ export class UserService {
   create(data: IUser) {
     return this._countByEmail(data.email)
       .pipe(
-        tap(exist => {
+        tap((exist) => {
           if (exist) throw new ForbiddenError('usuario ya existente');
         }),
         concatMap(() => this._create(data)),
-        map(user => ({
+        map((user) => ({
           userName: user.userName,
-          token: sign({ id: user._id.toString() }, 'mothySecret')
+          token: sign({ id: user._id.toString() }, 'mothySecret'),
         }))
       )
       .toPromise();
   }
 
-  private _searchUserByEmail(email: string) {
-    return from(UserModel.findOne({ email }).exec()).pipe(
-      map(value => {
+  private _searchUserByEmailORUser(email: string) {
+    return from(
+      UserModel.findOne({ $or: [{ userName: email }, { email: email }] }).exec()
+    ).pipe(
+      map((value) => {
         if (!value)
           throw new UserInputError(
-            'este email no esta registrado' + Date.now()
+            'este usuario no esta registrado-' + Date.now()
           );
         return value;
       })
@@ -56,8 +58,8 @@ export class UserService {
   }
 
   private _comparePassword(password: string, user: IUserDocument) {
-    return from(this._searchUserByEmail(user.email)).pipe(
-      map(dbUser => {
+    return from(this._searchUserByEmailORUser(user.email)).pipe(
+      map((dbUser) => {
         if (!dbUser || dbUser.password != password)
           throw new UserInputError('contraseña incorrecta');
         return dbUser;
@@ -66,12 +68,12 @@ export class UserService {
   }
 
   login(user: LoggUserInput) {
-    return this._searchUserByEmail(user.email)
+    return this._searchUserByEmailORUser(user.email)
       .pipe(
-        concatMap(logged => this._comparePassword(user.password, logged)),
-        map(user => ({
+        concatMap((logged) => this._comparePassword(user.password, logged)),
+        map((user) => ({
           userName: user.userName,
-          token: sign({ id: user._id.toString() }, 'mothySecret')
+          token: sign({ id: user._id.toString() }, 'mothySecret'),
         }))
       )
       .toPromise();
