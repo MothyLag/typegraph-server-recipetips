@@ -20,8 +20,8 @@ async function bootstrap() {
     playground: true,
     context: (ctx) => ctx,
   });
-
-  const { url } = await server.listen(4000);
+  const PORT = process.env.PORT || 4000;
+  const { url } = await server.listen(PORT);
   console.log(`running on ${url}`);
 }
 bootstrap();
