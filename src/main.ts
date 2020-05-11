@@ -18,6 +18,7 @@ async function bootstrap() {
   const server = new ApolloServer({
     schema,
     playground: true,
+    introspection: true,
     context: (ctx) => ctx,
   });
   const PORT = process.env.PORT || 4000;
