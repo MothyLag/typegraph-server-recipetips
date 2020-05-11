@@ -1,10 +1,9 @@
 import { Service } from 'typedi';
 import { from, of } from 'rxjs';
-import { map, concatMap, tap } from 'rxjs/operators';
-import { IDespensa, IDespensaDocument } from './models/despensa.interface';
+import { map, concatMap } from 'rxjs/operators';
+import { IDespensa } from './models/despensa.interface';
 import { DespensaModel } from './models/despensa.schema';
 import { AddIngredientInput } from './inputs/addIngredient.input';
-import { set } from 'mongoose';
 
 @Service()
 export class DespensaService {
