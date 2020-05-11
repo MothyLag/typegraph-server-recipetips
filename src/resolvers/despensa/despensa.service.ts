@@ -10,7 +10,7 @@ import { set } from 'mongoose';
 export class DespensaService {
   private _insertId$(data: IDespensa, id: string) {
     return of(data).pipe(
-      map(despensa => {
+      map((despensa) => {
         despensa.userId = id;
         return despensa;
       })
@@ -24,12 +24,12 @@ export class DespensaService {
   createDespensa(data: IDespensa, id: string) {
     return from(this._insertId$(data, id))
       .pipe(
-        concatMap(newDespensa => this._save$(newDespensa)),
-        map(despensa => {
+        concatMap((newDespensa) => this._save$(newDespensa)),
+        map((despensa) => {
           const data = {
             userId: despensa.userId,
             license: despensa.license,
-            containers: despensa.containers
+            containers: despensa.containers,
           } as IDespensa;
           console.log(data);
           return data;
@@ -40,10 +40,7 @@ export class DespensaService {
 
   addIngredient(ingredient: AddIngredientInput, userId: string) {
     return from(
-      DespensaModel.findByIdAndUpdate(
-        { userId },
-        set('ingredients', ingredient.ingredients)
-      )
+      DespensaModel.findByIdAndUpdate({ userId }, ingredient.ingredients)
     ).toPromise();
   }
 
