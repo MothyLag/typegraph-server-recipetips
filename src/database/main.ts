@@ -12,6 +12,7 @@ export class DataBase {
     try {
       mongoose.connect(this.URI, { useNewUrlParser: true });
     } catch (error) {
+      console.log('database error connection');
       console.log(error);
     }
   }
