@@ -5,12 +5,14 @@ import { concatMap, map } from 'rxjs/operators';
 
 export class DataBase {
   // private readonly URI =
-  private readonly URI =
-    'mongodb+srv://MothyLag:robomotymon100613@cluster0-cw6gu.mongodb.net/recipetips?retryWrites=true&w=majority';
-  //private readonly URI = 'mongodb://localhost:27017/recipetips';
+  //private readonly URI =
+  //  'mongodb+srv://MothyLag:robomotymon100613@cluster0-cw6gu.mongodb.net/recipetips?retryWrites=true&w=majority';
+  private readonly URI = 'mongodb://localhost:27017/recipetips';
   public connect() {
     try {
-      mongoose.connect(this.URI);
+      mongoose.connect(process.env.MONGODB_URI || this.URI, {
+        useNewUrlParser: true,
+      });
     } catch (error) {
       console.log('database error connection');
       console.log(error);
