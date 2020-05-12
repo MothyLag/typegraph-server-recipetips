@@ -9,14 +9,12 @@ export class DataBase {
   //  'mongodb+srv://MothyLag:robomotymon100613@cluster0-cw6gu.mongodb.net/recipetips?retryWrites=true&w=majority';
   private readonly URI = 'mongodb://localhost:27017/recipetips';
   public connect() {
-    try {
-      mongoose.connect(process.env.MONGODB_URI || this.URI, {
+    mongoose
+      .connect(process.env.MONGODB_URI || this.URI, {
         useNewUrlParser: true,
-      });
-    } catch (error) {
-      console.log('database error connection');
-      console.log(error);
-    }
+      })
+      .then((connect) => console.log('connected to mongodb..'))
+      .catch((e) => console.log('could not connect to mongodb', e));
   }
 
   startTransaction$() {
