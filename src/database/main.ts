@@ -10,7 +10,7 @@ export class DataBase {
   //private readonly URI = 'mongodb://localhost:27017/recipetips';
   public connect() {
     try {
-      mongoose.connect(this.URI, { useNewUrlParser: true });
+      mongoose.connect(this.URI);
     } catch (error) {
       console.log('database error connection');
       console.log(error);
