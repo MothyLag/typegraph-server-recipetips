@@ -44,6 +44,7 @@ export class DespensaService {
   }
 
   getDespensa(userId: string) {
+    DespensaModel.createCollection();
     return from(DespensaModel.find({ userId })).toPromise();
   }
 }
