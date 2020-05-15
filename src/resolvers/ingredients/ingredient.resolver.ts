@@ -11,6 +11,11 @@ export class IngredientResolver {
   getAllIngredients() {
     return this.ingredientService.getAllIngredients();
   }
+
+  @Query(() => [Ingredient])
+  getIngredientByName(@Arg('name') name: string) {
+    return this.ingredientService.getIngredientByName(name);
+  }
   @Mutation(() => Ingredient)
   createIngredient(@Arg('ingredient') newIngredient: CreateIngredientInput) {
     return this.ingredientService.create(newIngredient);

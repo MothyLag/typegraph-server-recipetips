@@ -11,4 +11,10 @@ export class IngredientService {
   getAllIngredients() {
     return ingredientModel.find({}).exec();
   }
+
+  getIngredientByName(query: string) {
+    return ingredientModel
+      .find({ name: { $regex: '^' + query + '.*', $options: 'i' } })
+      .exec();
+  }
 }

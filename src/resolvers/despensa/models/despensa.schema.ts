@@ -2,34 +2,30 @@ import { Schema, SchemaOptions, Model, model } from 'mongoose';
 import {
   IDespensa,
   IDespensaModel,
-  IDespensaDocument
+  IDespensaDocument,
 } from './despensa.interface';
 
 const options: SchemaOptions = {
-  timestamps: true
+  timestamps: true,
 };
 
 const despensaSchema: Schema<IDespensa> = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: String,
-      required: true
+      required: true,
     },
-    ingredients: [
+    items: [
       {
-        type: Schema.Types.ObjectId,
+        type: Object,
         ref: 'ingredient',
-        required: false
-      }
+        required: false,
+      },
     ],
-    containers: {
-      type: [String],
-      required: false
-    },
-    license: {
-      type: String,
-      required: true
-    }
   },
   options
 );

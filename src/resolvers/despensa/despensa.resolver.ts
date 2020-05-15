@@ -4,13 +4,14 @@ import {
   Arg,
   UseMiddleware,
   Ctx,
-  Query
+  Query,
 } from 'type-graphql';
 import { DespensaService } from './despensa.service';
 import { Despensa } from './despensa.type';
 import { CreateDespensaInput } from './inputs/createDespensa.input';
 import { getId } from '../../middlewares/session.middlewares';
 import { AddIngredientInput } from './inputs/addIngredient.input';
+import { RemoveItemInput } from './inputs/removeItem.input';
 
 @Resolver()
 export class DespensaResolver {
@@ -26,11 +27,18 @@ export class DespensaResolver {
     return this.despensaService.createDespensa(newDespensa, userId);
   }
 
+  @Query(() => [Despensa])
+  @UseMiddleware(getId)
+  getUserDespensas(@Ctx() ctx: any) {
+    const userId: string = ctx.res.locals.userId;
+    return this.despensaService.getDespensas(userId);
+  }
+
   @Query(() => Despensa)
   @UseMiddleware(getId)
-  getUserDespensa(@Ctx() ctx: any) {
+  getUserDespensa(@Ctx() ctx: any, @Arg('despensaID') despensaID: string) {
     const userId: string = ctx.res.locals.userId;
-    return this.despensaService.getDespensa(userId);
+    return this.despensaService.getDespensa(userId, despensaID);
   }
 
   @Mutation(() => Despensa)
@@ -41,5 +49,15 @@ export class DespensaResolver {
   ) {
     const userId: string = ctx.res.locals.userId;
     return this.despensaService.addIngredient(newIngredient, userId);
+  }
+
+  @Mutation(() => Despensa)
+  @UseMiddleware(getId)
+  removeItemDespensa(
+    @Arg('removeInput') data: RemoveItemInput,
+    @Ctx() ctx: any
+  ) {
+    const userID: string = ctx.res.locals.userId;
+    return this.despensaService.removeItem(data, userID);
   }
 }

@@ -1,16 +1,11 @@
 import { InputType, Field } from 'type-graphql';
+import { DespensaItem } from '../../despensaItem/despensaItem.type';
 
 @InputType()
 export class CreateDespensaInput {
-  @Field({ defaultValue: 'userId' })
-  userId: string;
+  @Field()
+  name: string;
 
-  @Field(() => [String], { nullable: true })
-  ingredients: string[];
-
-  @Field(() => [String], { nullable: true, defaultValue: 'verduras' })
-  containers: string[];
-
-  @Field({ nullable: true, defaultValue: 'free' })
-  license: string;
+  @Field(() => [DespensaItem], { nullable: true, defaultValue: [] })
+  items: DespensaItem[];
 }

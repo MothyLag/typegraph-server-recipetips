@@ -11,10 +11,4 @@ export class CreateIngredientInput implements Partial<IIngredient> {
 
   @Field({ nullable: true, defaultValue: '' })
   description?: string;
-
-  @Field()
-  container: string;
-
-  @Field({ nullable: true, defaultValue: 'kg' })
-  magnitud?: string;
 }

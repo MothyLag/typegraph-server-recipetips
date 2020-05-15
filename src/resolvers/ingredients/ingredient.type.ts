@@ -13,10 +13,4 @@ export class Ingredient {
 
   @Field({ nullable: true })
   description?: string;
-
-  @Field()
-  container?: string;
-
-  @Field({ nullable: true })
-  magnitud?: string;
 }

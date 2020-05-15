@@ -1,17 +1,20 @@
 import { Service } from 'typedi';
 import { from, of } from 'rxjs';
-import { map, concatMap } from 'rxjs/operators';
-import { IDespensa } from './models/despensa.interface';
+import { map, concatMap, tap } from 'rxjs/operators';
+import {
+  IDespensa,
+  IDespensaInput,
+  IDespensaAddInput,
+  IDespensaRemoveInput,
+} from './models/despensa.interface';
 import { DespensaModel } from './models/despensa.schema';
-import { AddIngredientInput } from './inputs/addIngredient.input';
 
 @Service()
 export class DespensaService {
-  private _insertId$(data: IDespensa, id: string) {
+  private _insertId$(data: IDespensaInput, id: string) {
     return of(data).pipe(
       map((despensa) => {
-        despensa.userId = id;
-        return despensa;
+        return { ...despensa, userId: id } as IDespensa;
       })
     );
   }
@@ -20,31 +23,43 @@ export class DespensaService {
     return from(new DespensaModel(data).save());
   }
 
-  createDespensa(data: IDespensa, id: string) {
+  createDespensa(data: IDespensaInput, id: string) {
     return from(this._insertId$(data, id))
       .pipe(
         concatMap((newDespensa) => this._save$(newDespensa)),
         map((despensa) => {
-          const data = {
-            userId: despensa.userId,
-            license: despensa.license,
-            containers: despensa.containers,
-          } as IDespensa;
-          console.log(data);
-          return data;
+          return despensa;
         })
       )
       .toPromise();
   }
 
-  addIngredient(ingredient: AddIngredientInput, userId: string) {
-    return from(
-      DespensaModel.findByIdAndUpdate({ userId }, ingredient.ingredients)
-    ).toPromise();
+  async addIngredient(newIngredient: IDespensaAddInput, userId: string) {
+    const despensa = await this.getDespensa(userId, newIngredient.despensaID);
+    await despensa.items.push(newIngredient.item);
+    return from(despensa.save()).toPromise();
   }
 
-  getDespensa(userId: string) {
+  getDespensa(userId: string, despensaID: string) {
     DespensaModel.createCollection();
-    return from(DespensaModel.find({ userId })).toPromise();
+    return from(
+      DespensaModel.findOne({ $and: [{ userId }, { _id: despensaID }] }).exec()
+    )
+      .pipe(tap((res) => console.log(res)))
+      .toPromise();
+  }
+
+  getDespensas(userId: string) {
+    DespensaModel.createCollection();
+    return from(DespensaModel.find({ userId }).exec()).toPromise();
+  }
+
+  async removeItem(data: IDespensaRemoveInput, userID: string) {
+    const despensa = await this.getDespensa(userID, data.despensaID);
+    const newItems = await despensa.items.filter(
+      (item) => item.ingredientID != data.ingredientID
+    );
+    despensa.items = newItems;
+    return despensa.save();
   }
 }

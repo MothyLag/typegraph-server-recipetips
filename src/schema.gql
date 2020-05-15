@@ -4,22 +4,19 @@
 # -----------------------------------------------
 
 input AddIngredientInput {
-  ingredients: [String!]!
+  item: despensaItem!
+  despensaID: String!
 }
 
 input CreateDespensaInput {
-  userId: String = "userId"
-  ingredients: [String!]
-  containers: [String!] = "verduras"
-  license: String = "free"
+  name: String!
+  items: [despensaItem!] = []
 }
 
 input CreateIngredientInput {
   name: String!
   standardPrice: Float = 0
   description: String = ""
-  container: String!
-  magnitud: String = "kg"
 }
 
 input CreateRecipeInput {
@@ -38,10 +35,21 @@ input CreateUserInput {
 
 type Despensa {
   id: ID
+  name: String!
   userId: String!
-  ingredients: [String!]
-  containers: [String!]
-  license: String!
+  items: [DespensaItem!]
+}
+
+input despensaItem {
+  ingredientID: String!
+  quantity: Float!
+  unit: String!
+}
+
+type DespensaItem {
+  ingredientID: String!
+  quantity: Float!
+  unit: String!
 }
 
 type Ingredient {
@@ -49,8 +57,6 @@ type Ingredient {
   name: String!
   standardPrice: Float
   description: String
-  container: String!
-  magnitud: String
 }
 
 input LoggUserInput {
@@ -61,14 +67,17 @@ input LoggUserInput {
 type Mutation {
   createDespensa(despensa: CreateDespensaInput!): Despensa!
   addItemDespensa(ingredient: AddIngredientInput!): Despensa!
+  removeItemDespensa(removeInput: RemoveItemInput!): Despensa!
   createIngredient(ingredient: CreateIngredientInput!): Ingredient!
   createRecipe(recipe: CreateRecipeInput!): Recipe!
   createUser(user: CreateUserInput!): UserWithToken!
 }
 
 type Query {
-  getUserDespensa: Despensa!
+  getUserDespensas: [Despensa!]!
+  getUserDespensa(despensaID: String!): Despensa!
   getAllIngredients: [Ingredient!]!
+  getIngredientByName(name: String!): [Ingredient!]!
   greet: String!
   login(user: LoggUserInput!): UserWithToken!
 }
@@ -80,6 +89,11 @@ type Recipe {
   difficult: Int
   rate: [Int!]
   userId: String!
+}
+
+input RemoveItemInput {
+  ingredientID: String!
+  despensaID: String!
 }
 
 type UserWithToken {

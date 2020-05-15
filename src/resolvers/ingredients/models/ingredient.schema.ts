@@ -4,24 +4,16 @@ import { IIngredientDocument } from './ingredient.interfaces';
 const ingredientSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   standardPrice: {
     type: Number,
-    required: false
+    required: false,
   },
   description: {
     type: String,
-    required: false
+    required: false,
   },
-  container: {
-    type: String,
-    required: true
-  },
-  magnitud: {
-    type: String,
-    required: false
-  }
 });
 
 export const ingredientModel = model<IIngredientDocument>(

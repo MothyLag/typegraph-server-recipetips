@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from 'type-graphql';
+import { DespensaItem } from '../despensaItem/despensaItem.type';
 
 @ObjectType()
 export class Despensa {
@@ -6,14 +7,11 @@ export class Despensa {
   id?: string;
 
   @Field()
-  userId: string;
-
-  @Field(() => [String], { nullable: true })
-  ingredients?: string[];
-
-  @Field(() => [String], { nullable: true })
-  containers?: string[];
+  name: string;
 
   @Field()
-  license: string;
+  userId: string;
+
+  @Field(() => [DespensaItem], { nullable: true })
+  items?: DespensaItem[];
 }
