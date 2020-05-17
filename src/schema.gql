@@ -22,9 +22,9 @@ input CreateIngredientInput {
 input CreateRecipeInput {
   name: String!
   description: String!
-  ingredients: [String!]!
+  preparation: String!
+  ingredients: [despensaItem!]!
   difficult: Int
-  rate: [Int!]
 }
 
 input CreateUserInput {
@@ -68,6 +68,9 @@ type Mutation {
   createDespensa(despensa: CreateDespensaInput!): Despensa!
   addItemDespensa(ingredient: AddIngredientInput!): Despensa!
   removeItemDespensa(removeInput: RemoveItemInput!): Despensa!
+  updateItem(item: AddIngredientInput!): Despensa!
+  updateDespensaName(despensaID: UpdateDespensaNameInput!): Despensa!
+  dropDespensa(despensaID: String!): Boolean!
   createIngredient(ingredient: CreateIngredientInput!): Ingredient!
   createRecipe(recipe: CreateRecipeInput!): Recipe!
   createUser(user: CreateUserInput!): UserWithToken!
@@ -85,7 +88,7 @@ type Query {
 type Recipe {
   name: String!
   description: String!
-  ingredients: [String!]!
+  ingredients: [DespensaItem!]!
   difficult: Int
   rate: [Int!]
   userId: String!
@@ -93,6 +96,11 @@ type Recipe {
 
 input RemoveItemInput {
   ingredientID: String!
+  despensaID: String!
+}
+
+input UpdateDespensaNameInput {
+  name: String!
   despensaID: String!
 }
 

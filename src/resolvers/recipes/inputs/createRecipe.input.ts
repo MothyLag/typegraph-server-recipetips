@@ -1,5 +1,6 @@
 import { InputType, Field, Int } from 'type-graphql';
 import { Recipe } from '../recipe.type';
+import { DespensaItem } from '../../despensaItem/despensaItem.type';
 
 @InputType()
 export class CreateRecipeInput implements Partial<Recipe> {
@@ -9,12 +10,12 @@ export class CreateRecipeInput implements Partial<Recipe> {
   @Field()
   description: string;
 
-  @Field(() => [String])
-  ingredients: string[];
+  @Field()
+  preparation: string;
+
+  @Field(() => [DespensaItem])
+  ingredients: DespensaItem[];
 
   @Field(() => Int, { nullable: true })
   difficult: number;
-
-  @Field(() => [Int], { nullable: true })
-  rate: number[];
 }

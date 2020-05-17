@@ -6,6 +6,7 @@ import {
   IDespensaInput,
   IDespensaAddInput,
   IDespensaRemoveInput,
+  IDespensaUpdateNameInput,
 } from './models/despensa.interface';
 import { DespensaModel } from './models/despensa.schema';
 
@@ -44,9 +45,7 @@ export class DespensaService {
     DespensaModel.createCollection();
     return from(
       DespensaModel.findOne({ $and: [{ userId }, { _id: despensaID }] }).exec()
-    )
-      .pipe(tap((res) => console.log(res)))
-      .toPromise();
+    ).toPromise();
   }
 
   getDespensas(userId: string) {
@@ -61,5 +60,32 @@ export class DespensaService {
     );
     despensa.items = newItems;
     return despensa.save();
+  }
+
+  async updateItem(data: IDespensaAddInput, userID) {
+    const despensa = await this.getDespensa(userID, data.despensaID);
+    const newItems = await despensa.items.map((item) => {
+      if (item.ingredientID === data.item.ingredientID) item = data.item;
+      return item;
+    });
+    despensa.items = newItems;
+    return despensa.save();
+  }
+
+  async updateDespensaName(data: IDespensaUpdateNameInput, userID: string) {
+    const despensa = await this.getDespensa(userID, data.despensaID);
+    despensa.name = data.name;
+    return despensa.save();
+  }
+
+  async dropDespensa(despensaID: string, userID: string) {
+    const despensa = await this.getDespensa(userID, despensaID);
+    return despensa
+      .remove()
+      .then(() => true)
+      .catch((error) => {
+        console.log(error);
+        return false;
+      });
   }
 }

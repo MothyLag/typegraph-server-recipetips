@@ -22,7 +22,6 @@ const despensaSchema: Schema<IDespensa> = new Schema(
     items: [
       {
         type: Object,
-        ref: 'ingredient',
         required: false,
       },
     ],

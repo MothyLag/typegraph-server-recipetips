@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from 'type-graphql';
+import { DespensaItem } from '../despensaItem/despensaItem.type';
 
 @ObjectType()
 export class Recipe {
@@ -8,13 +9,13 @@ export class Recipe {
   @Field()
   description: string;
 
-  @Field(() => [String])
-  ingredients: string[];
+  @Field(() => [DespensaItem])
+  ingredients: DespensaItem[];
 
   @Field(() => Int, { nullable: true })
   difficult?: number;
 
-  @Field(() => [Int], { nullable: true })
+  @Field(() => [Int], { nullable: true, defaultValue: [] })
   rate?: number[];
 
   @Field(() => String)

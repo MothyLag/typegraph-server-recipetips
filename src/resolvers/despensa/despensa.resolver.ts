@@ -12,6 +12,7 @@ import { CreateDespensaInput } from './inputs/createDespensa.input';
 import { getId } from '../../middlewares/session.middlewares';
 import { AddIngredientInput } from './inputs/addIngredient.input';
 import { RemoveItemInput } from './inputs/removeItem.input';
+import { UpdateDespensaNameInput } from './inputs/updateDespensa.input';
 
 @Resolver()
 export class DespensaResolver {
@@ -59,5 +60,29 @@ export class DespensaResolver {
   ) {
     const userID: string = ctx.res.locals.userId;
     return this.despensaService.removeItem(data, userID);
+  }
+
+  @Mutation(() => Despensa)
+  @UseMiddleware(getId)
+  updateItem(@Ctx() ctx: any, @Arg('item') data: AddIngredientInput) {
+    const userId = ctx.res.locals.userId;
+    return this.despensaService.updateItem(data, userId);
+  }
+
+  @Mutation(() => Despensa)
+  @UseMiddleware(getId)
+  updateDespensaName(
+    @Ctx() ctx: any,
+    @Arg('despensaID') despensaID: UpdateDespensaNameInput
+  ) {
+    const userId = ctx.res.locals.userId;
+    return this.despensaService.updateDespensaName(despensaID, userId);
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(getId)
+  dropDespensa(@Ctx() ctx: any, @Arg('despensaID') despensaID: string) {
+    const userId = ctx.res.locals.userId;
+    return this.despensaService.dropDespensa(despensaID, userId);
   }
 }

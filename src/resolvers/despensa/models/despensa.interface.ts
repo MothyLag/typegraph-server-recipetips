@@ -23,6 +23,11 @@ export interface IDespensaAddInput {
   item: IDespensaItem;
 }
 
+export interface IDespensaUpdateNameInput {
+  name: string;
+  despensaID: string;
+}
+
 export interface IDespensaDocument extends Document, IDespensa {}
 
 export interface IDespensaModel extends Model<IDespensaDocument> {}
