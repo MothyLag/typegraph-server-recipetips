@@ -28,9 +28,11 @@ function bootstrap() {
         const server = new apollo_server_1.ApolloServer({
             schema,
             playground: true,
+            introspection: true,
             context: (ctx) => ctx,
         });
-        const { url } = yield server.listen(4000);
+        const PORT = process.env.PORT || 4000;
+        const { url } = yield server.listen(PORT);
         console.log(`running on ${url}`);
     });
 }

@@ -7,16 +7,18 @@ const operators_1 = require("rxjs/operators");
 class DataBase {
     constructor() {
         // private readonly URI =
-        this.URI = 'mongodb+srv://MothyLag:robomotymon100613@cluster0-cw6gu.mongodb.net/recipetips?retryWrites=true&w=majority';
+        //private readonly URI =
+        //  'mongodb+srv://MothyLag:robomotymon100613@cluster0-cw6gu.mongodb.net/recipetips?retryWrites=true&w=majority';
+        this.URI = 'mongodb://localhost:27017/recipetips';
     }
-    //private readonly URI = 'mongodb://localhost:27017/recipetips';
     connect() {
-        try {
-            mongoose.connect(this.URI, { useNewUrlParser: true });
-        }
-        catch (error) {
-            console.log(error);
-        }
+        mongoose
+            .connect(process.env.MONGODB_URI || this.URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+            .then((connect) => console.log('connected to mongodb..'))
+            .catch((e) => console.log('could not connect to mongodb', e));
     }
     startTransaction$() {
         return rxjs_1.from(mongoose_1.startSession()).pipe(operators_1.concatMap((session) => rxjs_1.of(session.startTransaction()).pipe(operators_1.map(() => session))));

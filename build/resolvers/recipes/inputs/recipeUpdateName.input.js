@@ -10,27 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
-const despensaItem_type_1 = require("../despensaItem/despensaItem.type");
-let Despensa = class Despensa {
+let RecipeUpdateName = class RecipeUpdateName {
 };
 __decorate([
-    type_graphql_1.Field(() => type_graphql_1.ID, { nullable: true }),
+    type_graphql_1.Field(),
     __metadata("design:type", String)
-], Despensa.prototype, "id", void 0);
+], RecipeUpdateName.prototype, "name", void 0);
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], Despensa.prototype, "name", void 0);
-__decorate([
-    type_graphql_1.Field(),
-    __metadata("design:type", String)
-], Despensa.prototype, "userId", void 0);
-__decorate([
-    type_graphql_1.Field(() => [despensaItem_type_1.DespensaItem], { nullable: true }),
-    __metadata("design:type", Array)
-], Despensa.prototype, "items", void 0);
-Despensa = __decorate([
-    type_graphql_1.ObjectType()
-], Despensa);
-exports.Despensa = Despensa;
-//# sourceMappingURL=despensa.type.js.map
+], RecipeUpdateName.prototype, "recipeId", void 0);
+RecipeUpdateName = __decorate([
+    type_graphql_1.InputType()
+], RecipeUpdateName);
+exports.RecipeUpdateName = RecipeUpdateName;
+//# sourceMappingURL=recipeUpdateName.input.js.map

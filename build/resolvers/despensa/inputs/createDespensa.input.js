@@ -10,24 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
+const despensaItem_type_1 = require("../../despensaItem/despensaItem.type");
 let CreateDespensaInput = class CreateDespensaInput {
 };
 __decorate([
-    type_graphql_1.Field({ defaultValue: 'userId' }),
+    type_graphql_1.Field(),
     __metadata("design:type", String)
-], CreateDespensaInput.prototype, "userId", void 0);
+], CreateDespensaInput.prototype, "name", void 0);
 __decorate([
-    type_graphql_1.Field(() => [String], { nullable: true }),
+    type_graphql_1.Field(() => [despensaItem_type_1.DespensaItem], { nullable: true, defaultValue: [] }),
     __metadata("design:type", Array)
-], CreateDespensaInput.prototype, "ingredients", void 0);
-__decorate([
-    type_graphql_1.Field(() => [String], { nullable: true, defaultValue: 'verduras' }),
-    __metadata("design:type", Array)
-], CreateDespensaInput.prototype, "containers", void 0);
-__decorate([
-    type_graphql_1.Field({ nullable: true, defaultValue: 'free' }),
-    __metadata("design:type", String)
-], CreateDespensaInput.prototype, "license", void 0);
+], CreateDespensaInput.prototype, "items", void 0);
 CreateDespensaInput = __decorate([
     type_graphql_1.InputType()
 ], CreateDespensaInput);

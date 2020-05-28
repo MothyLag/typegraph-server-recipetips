@@ -15,6 +15,11 @@ let IngredientService = class IngredientService {
     getAllIngredients() {
         return ingredient_schema_1.ingredientModel.find({}).exec();
     }
+    getIngredientByName(query) {
+        return ingredient_schema_1.ingredientModel
+            .find({ name: { $regex: '^' + query + '.*', $options: 'i' } })
+            .exec();
+    }
 };
 IngredientService = __decorate([
     typedi_1.Service()

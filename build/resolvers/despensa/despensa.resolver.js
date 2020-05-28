@@ -18,6 +18,8 @@ const despensa_type_1 = require("./despensa.type");
 const createDespensa_input_1 = require("./inputs/createDespensa.input");
 const session_middlewares_1 = require("../../middlewares/session.middlewares");
 const addIngredient_input_1 = require("./inputs/addIngredient.input");
+const removeItem_input_1 = require("./inputs/removeItem.input");
+const updateDespensa_input_1 = require("./inputs/updateDespensa.input");
 let DespensaResolver = class DespensaResolver {
     constructor(despensaService) {
         this.despensaService = despensaService;
@@ -26,13 +28,33 @@ let DespensaResolver = class DespensaResolver {
         const userId = ctx.res.locals.userId;
         return this.despensaService.createDespensa(newDespensa, userId);
     }
-    getUserDespensa(ctx) {
+    getUserDespensas(ctx) {
         const userId = ctx.res.locals.userId;
-        return this.despensaService.getDespensa(userId);
+        return this.despensaService.getDespensas(userId);
+    }
+    getUserDespensa(ctx, despensaID) {
+        const userId = ctx.res.locals.userId;
+        return this.despensaService.getDespensa(userId, despensaID);
     }
     addItemDespensa(newIngredient, ctx) {
         const userId = ctx.res.locals.userId;
         return this.despensaService.addIngredient(newIngredient, userId);
+    }
+    removeItemDespensa(data, ctx) {
+        const userID = ctx.res.locals.userId;
+        return this.despensaService.removeItem(data, userID);
+    }
+    updateItem(ctx, data) {
+        const userId = ctx.res.locals.userId;
+        return this.despensaService.updateItem(data, userId);
+    }
+    updateDespensaName(ctx, despensaID) {
+        const userId = ctx.res.locals.userId;
+        return this.despensaService.updateDespensaName(despensaID, userId);
+    }
+    dropDespensa(ctx, despensaID) {
+        const userId = ctx.res.locals.userId;
+        return this.despensaService.dropDespensa(despensaID, userId);
     }
 };
 __decorate([
@@ -45,11 +67,19 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DespensaResolver.prototype, "createDespensa", null);
 __decorate([
-    type_graphql_1.Query(() => despensa_type_1.Despensa),
+    type_graphql_1.Query(() => [despensa_type_1.Despensa]),
     type_graphql_1.UseMiddleware(session_middlewares_1.getId),
     __param(0, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], DespensaResolver.prototype, "getUserDespensas", null);
+__decorate([
+    type_graphql_1.Query(() => despensa_type_1.Despensa),
+    type_graphql_1.UseMiddleware(session_middlewares_1.getId),
+    __param(0, type_graphql_1.Ctx()), __param(1, type_graphql_1.Arg('despensaID')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", void 0)
 ], DespensaResolver.prototype, "getUserDespensa", null);
 __decorate([
@@ -61,6 +91,40 @@ __decorate([
     __metadata("design:paramtypes", [addIngredient_input_1.AddIngredientInput, Object]),
     __metadata("design:returntype", void 0)
 ], DespensaResolver.prototype, "addItemDespensa", null);
+__decorate([
+    type_graphql_1.Mutation(() => despensa_type_1.Despensa),
+    type_graphql_1.UseMiddleware(session_middlewares_1.getId),
+    __param(0, type_graphql_1.Arg('removeInput')),
+    __param(1, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [removeItem_input_1.RemoveItemInput, Object]),
+    __metadata("design:returntype", void 0)
+], DespensaResolver.prototype, "removeItemDespensa", null);
+__decorate([
+    type_graphql_1.Mutation(() => despensa_type_1.Despensa),
+    type_graphql_1.UseMiddleware(session_middlewares_1.getId),
+    __param(0, type_graphql_1.Ctx()), __param(1, type_graphql_1.Arg('item')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, addIngredient_input_1.AddIngredientInput]),
+    __metadata("design:returntype", void 0)
+], DespensaResolver.prototype, "updateItem", null);
+__decorate([
+    type_graphql_1.Mutation(() => despensa_type_1.Despensa),
+    type_graphql_1.UseMiddleware(session_middlewares_1.getId),
+    __param(0, type_graphql_1.Ctx()),
+    __param(1, type_graphql_1.Arg('despensaID')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, updateDespensa_input_1.UpdateDespensaNameInput]),
+    __metadata("design:returntype", void 0)
+], DespensaResolver.prototype, "updateDespensaName", null);
+__decorate([
+    type_graphql_1.Mutation(() => Boolean),
+    type_graphql_1.UseMiddleware(session_middlewares_1.getId),
+    __param(0, type_graphql_1.Ctx()), __param(1, type_graphql_1.Arg('despensaID')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], DespensaResolver.prototype, "dropDespensa", null);
 DespensaResolver = __decorate([
     type_graphql_1.Resolver(),
     __metadata("design:paramtypes", [despensa_service_1.DespensaService])

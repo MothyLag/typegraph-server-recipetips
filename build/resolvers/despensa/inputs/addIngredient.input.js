@@ -10,12 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
+const despensaItem_type_1 = require("../../despensaItem/despensaItem.type");
 let AddIngredientInput = class AddIngredientInput {
 };
 __decorate([
-    type_graphql_1.Field(() => [String]),
-    __metadata("design:type", Array)
-], AddIngredientInput.prototype, "ingredients", void 0);
+    type_graphql_1.Field(() => despensaItem_type_1.DespensaItem),
+    __metadata("design:type", despensaItem_type_1.DespensaItem)
+], AddIngredientInput.prototype, "item", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], AddIngredientInput.prototype, "despensaID", void 0);
 AddIngredientInput = __decorate([
     type_graphql_1.InputType()
 ], AddIngredientInput);

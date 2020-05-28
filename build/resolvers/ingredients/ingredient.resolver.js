@@ -23,6 +23,9 @@ let IngredientResolver = class IngredientResolver {
     getAllIngredients() {
         return this.ingredientService.getAllIngredients();
     }
+    getIngredientByName(name) {
+        return this.ingredientService.getIngredientByName(name);
+    }
     createIngredient(newIngredient) {
         return this.ingredientService.create(newIngredient);
     }
@@ -33,6 +36,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], IngredientResolver.prototype, "getAllIngredients", null);
+__decorate([
+    type_graphql_1.Query(() => [ingredient_type_1.Ingredient]),
+    __param(0, type_graphql_1.Arg('name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], IngredientResolver.prototype, "getIngredientByName", null);
 __decorate([
     type_graphql_1.Mutation(() => ingredient_type_1.Ingredient),
     __param(0, type_graphql_1.Arg('ingredient')),

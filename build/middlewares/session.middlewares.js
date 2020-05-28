@@ -16,7 +16,7 @@ exports.authMiddleware = (_, next) => __awaiter(void 0, void 0, void 0, function
     return result;
 });
 exports.getId = (_, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = jsonwebtoken_1.verify(_.context.req.headers.token, 'mothySecret');
+    const { id } = jsonwebtoken_1.verify(_.context.req.headers.token.split(' ')[0], 'mothySecret');
     _.context.res.locals.userId = id;
     const result = yield next();
     return result;

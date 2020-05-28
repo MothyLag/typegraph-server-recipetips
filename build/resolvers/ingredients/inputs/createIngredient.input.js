@@ -24,14 +24,6 @@ __decorate([
     type_graphql_1.Field({ nullable: true, defaultValue: '' }),
     __metadata("design:type", String)
 ], CreateIngredientInput.prototype, "description", void 0);
-__decorate([
-    type_graphql_1.Field(),
-    __metadata("design:type", String)
-], CreateIngredientInput.prototype, "container", void 0);
-__decorate([
-    type_graphql_1.Field({ nullable: true, defaultValue: 'kg' }),
-    __metadata("design:type", String)
-], CreateIngredientInput.prototype, "magnitud", void 0);
 CreateIngredientInput = __decorate([
     type_graphql_1.InputType()
 ], CreateIngredientInput);

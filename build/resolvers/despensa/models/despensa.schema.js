@@ -2,28 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const options = {
-    timestamps: true
+    timestamps: true,
 };
 const despensaSchema = new mongoose_1.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
     userId: {
         type: String,
-        required: true
+        required: true,
     },
-    ingredients: [
+    items: [
         {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: 'ingredient',
-            required: false
-        }
+            type: Object,
+            required: false,
+        },
     ],
-    containers: {
-        type: [String],
-        required: false
-    },
-    license: {
-        type: String,
-        required: true
-    }
 }, options);
 exports.DespensaModel = mongoose_1.model('despensa', despensaSchema);
 //# sourceMappingURL=despensa.schema.js.map

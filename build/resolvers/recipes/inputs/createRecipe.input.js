@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
+const despensaItem_type_1 = require("../../despensaItem/despensaItem.type");
 let CreateRecipeInput = class CreateRecipeInput {
 };
 __decorate([
@@ -21,17 +22,17 @@ __decorate([
     __metadata("design:type", String)
 ], CreateRecipeInput.prototype, "description", void 0);
 __decorate([
-    type_graphql_1.Field(() => [String]),
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], CreateRecipeInput.prototype, "preparation", void 0);
+__decorate([
+    type_graphql_1.Field(() => [despensaItem_type_1.DespensaItem]),
     __metadata("design:type", Array)
 ], CreateRecipeInput.prototype, "ingredients", void 0);
 __decorate([
     type_graphql_1.Field(() => type_graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], CreateRecipeInput.prototype, "difficult", void 0);
-__decorate([
-    type_graphql_1.Field(() => [type_graphql_1.Int], { nullable: true }),
-    __metadata("design:type", Array)
-], CreateRecipeInput.prototype, "rate", void 0);
 CreateRecipeInput = __decorate([
     type_graphql_1.InputType()
 ], CreateRecipeInput);

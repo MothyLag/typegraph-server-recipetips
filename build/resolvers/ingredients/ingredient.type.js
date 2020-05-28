@@ -28,14 +28,6 @@ __decorate([
     type_graphql_1.Field({ nullable: true }),
     __metadata("design:type", String)
 ], Ingredient.prototype, "description", void 0);
-__decorate([
-    type_graphql_1.Field(),
-    __metadata("design:type", String)
-], Ingredient.prototype, "container", void 0);
-__decorate([
-    type_graphql_1.Field({ nullable: true }),
-    __metadata("design:type", String)
-], Ingredient.prototype, "magnitud", void 0);
 Ingredient = __decorate([
     type_graphql_1.ObjectType()
 ], Ingredient);
