@@ -13,7 +13,10 @@ export const authMiddleware: MiddlewareFn<any> = async (_, next) => {
 };
 
 export const getId: MiddlewareFn<any> = async (_, next) => {
-  const { id } = verify(_.context.req.headers.token, 'mothySecret') as IToken;
+  const { id } = verify(
+    _.context.req.headers.token.split(' ')[0],
+    'mothySecret'
+  ) as IToken;
   _.context.res.locals.userId = id;
   const result = await next();
   return result;

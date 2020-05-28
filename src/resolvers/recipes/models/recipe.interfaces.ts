@@ -11,6 +11,17 @@ export interface IRecipe {
   userId: string;
 }
 
+export interface IRecipeUpdateName {
+  name: string;
+  recipeId: string;
+}
+
+export interface IRecipeUpdatePreparation {
+  recipeId: string;
+  preparation: string;
+  ingredients: IDespensaItem[];
+}
+
 export interface ICreateRecipe {
   name: string;
   description: string;

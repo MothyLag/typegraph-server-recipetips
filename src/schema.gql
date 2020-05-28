@@ -73,6 +73,8 @@ type Mutation {
   dropDespensa(despensaID: String!): Boolean!
   createIngredient(ingredient: CreateIngredientInput!): Ingredient!
   createRecipe(recipe: CreateRecipeInput!): Recipe!
+  updateRecipeName(recipe: RecipeUpdateName!): Recipe!
+  updateRecipePreparation(recipe: RecipeUpdatePreparation!): Recipe!
   createUser(user: CreateUserInput!): UserWithToken!
 }
 
@@ -81,17 +83,31 @@ type Query {
   getUserDespensa(despensaID: String!): Despensa!
   getAllIngredients: [Ingredient!]!
   getIngredientByName(name: String!): [Ingredient!]!
+  getRecipesUser: [Recipe!]!
   greet: String!
   login(user: LoggUserInput!): UserWithToken!
 }
 
 type Recipe {
+  id: ID
   name: String!
   description: String!
+  preparation: String!
   ingredients: [DespensaItem!]!
   difficult: Int
   rate: [Int!]
   userId: String!
+}
+
+input RecipeUpdateName {
+  name: String!
+  recipeId: String!
+}
+
+input RecipeUpdatePreparation {
+  recipeId: String!
+  preparation: String!
+  ingredients: [despensaItem!]!
 }
 
 input RemoveItemInput {
